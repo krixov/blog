@@ -3,8 +3,7 @@
 @tailwind utilities;
 
 /* Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap');
 
 :root {
   --bg: #f2f2f0;
@@ -49,7 +48,7 @@
 }
 
 html {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'JetBrains Mono', monospace;
   color: var(--fg);
   background-color: var(--bg);
 }
@@ -237,7 +236,7 @@ body {
   border: 1px solid var(--inline-code-border);
   border-radius: 6px;
   padding: 0.1em 0.35em;
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'JetBrains Mono', monospace;
   font-size: 0.95em;
 }
 

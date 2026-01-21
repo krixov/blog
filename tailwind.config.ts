@@ -10,15 +10,15 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Space Grotesk', 'sans-serif'],
-        mono: ['IBM Plex Mono', 'monospace'],
+        sans: ['JetBrains Mono', 'monospace'],
+        mono: ['JetBrains Mono', 'monospace'],
       },
       typography: {
         DEFAULT: {
           css: {
             maxWidth: 'none',
             color: 'inherit',
-            fontFamily: 'Space Grotesk, sans-serif',
+            fontFamily: 'JetBrains Mono, monospace',
             h1: {
               fontWeight: '700',
               letterSpacing: '-0.025em',
