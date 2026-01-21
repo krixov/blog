@@ -1,89 +1,109 @@
 # Tech Blog
 
-A minimalist personal blog built with Next.js, Tailwind CSS, and Markdown.
+Minimal personal blog built with Next.js, Tailwind CSS, and Markdown.
 
 ## Features
 
-- 🎨 Clean, minimalist design with Tailwind CSS
-- 🌙 Dark/Light mode support
-- ✍️ Write posts in Markdown
-- 📝 Advanced Markdown features:
-  - Code blocks with syntax highlighting
-  - Math equations (KaTeX)
-  - Emoji support
-  - Footnotes
-  - Tables
-  - Task lists
-- 📑 Automatic table of contents
-- 🔍 SEO friendly
-- 📱 Fully responsive
+- Clean responsive layout with light/dark themes
+- Markdown posts and pages
+- Rich Markdown: tables, task lists, footnotes, math (KaTeX)
+- Automatic table of contents
+- SEO-friendly metadata
+- Simple pagination
 
-## Getting Started
+## Requirements
 
-1. Clone the repository:
+- Node.js 20.x
+- npm (recommended because `package-lock.json` is present)
+
+## Quick Start
+
 ```bash
 git clone https://github.com/sondt1337/Tech-Blog.git
 cd Tech-Blog
-```
-
-2. Install dependencies:
-```bash
 npm install
-# or
-yarn install
-```
-
-3. Run the development server:
-```bash
 npm run dev
-# or
-yarn dev
 ```
 
-4. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000`.
+
+## Content Layout
+
+- `content/*.md`: posts at `/posts/<slug>`
+- `content/pages/*.md`: pages at `/<slug>`
+- `content/images/*`: post images, served via `/api/content/images`
+- `public/*`: static assets like favicon and site icons
+
+## Writing Posts
+
+Create a new file in `content/` with frontmatter:
+
+```yaml
+---
+title: "Your Post Title"
+date: "YYYY-MM-DD"
+excerpt: "Short description for the post"
+featured: "/images/featured.jpg"
+---
+```
+
+Notes:
+- `date` is used for sorting (newest first).
+- `featured` is optional.
+- Put images in `content/images` and reference them as `/images/...` or `images/...`.
+
+## Writing Pages
+
+Create a new file in `content/pages/` with frontmatter:
+
+```yaml
+---
+title: "About"
+lastUpdated: "YYYY-MM-DD"
+---
+```
+
+## Markdown Pipeline
+
+Markdown processing happens in:
+
+- `src/pages/posts/[slug].tsx`
+- `src/pages/[slug].tsx`
+
+Enabled features:
+- `remark-gfm` (tables, task lists, footnotes)
+- `remark-math` + `rehype-katex`
+- `remark-emoji`
+
+Raw HTML in Markdown is not rendered by default. Add `rehype-raw` if you need it.
 
 ## Project Structure
 
 ```
 Tech-Blog/
-├── content/           # Markdown posts + assets
-│   ├── images/       # Post images (served via /api/content/images)
-│   └── pages/        # Static pages (about, etc.)
-├── public/           # Static assets (favicon, etc.)
+├── content/
+│   ├── images/
+│   └── pages/
+├── public/
 └── src/
-    ├── components/   # React components
-    ├── layouts/      # Layout components
-    ├── lib/          # Utilities & helpers
-    ├── pages/        # Next.js pages
-    └── styles/       # CSS styles
+    ├── components/
+    ├── layouts/
+    ├── lib/
+    ├── pages/
+    └── styles/
 ```
 
-## Writing Posts
+## Scripts
 
-1. Create a new `.md` file in the `content/` directory
-2. Add frontmatter with the following format:
-```yaml
----
-title: "Your Post Title"
-date: "YYYY-MM-DD"
-excerpt: "A brief description of your post"
-featured: "/images/featured.jpg"
----
-```
-3. Put images in `content/images` and reference them with `/images/...` or `images/...`
-4. Write your post content in Markdown
+- `npm run dev`: start dev server
+- `npm run build`: build production bundle
+- `npm start`: run production server
+- `npm run lint`: lint
+- `npm run clean`: remove `.next` and `node_modules`
 
-## Tech Stack
+## Deployment
 
-- [Next.js](https://nextjs.org/) - React framework
-- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
-- [Unified](https://unifiedjs.com/) - Markdown processing
-- [KaTeX](https://katex.org/) - Math rendering
-- [Prism](https://prismjs.com/) - Syntax highlighting
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
+`/page/[page]` uses `getServerSideProps`, so you need a Node runtime (not `next export`).
 
 ## License
 
@@ -91,4 +111,4 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## Author
 
-- Thai Son Dinh ([@krixov](https://x.com/krixov))
+- Thai Son Dinh ([@_sondt_](https://x.com/_sondt_))
