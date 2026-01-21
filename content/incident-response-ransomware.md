@@ -3,6 +3,11 @@ title: "Incident Response Notes: Containing a Ransomware Intrusion"
 date: "2024-12-01"
 excerpt: "A narrative runbook with evidence collection, triage commands, and reporting."
 featured: "/images/test2.jpg"
+tags:
+  - incident-response
+  - ransomware
+  - forensics
+  - blue-team
 ---
 
 ## Executive summary

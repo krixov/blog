@@ -3,6 +3,11 @@ title: "Reverse Engineering a Crackme: Static, Dynamic, and Patching"
 date: "2024-12-04"
 excerpt: "A long-form walkthrough: from strings and imports to a patched branch and a clean keygen."
 featured: "/images/test2.jpg"
+tags:
+  - reverse-engineering
+  - crackme
+  - static-analysis
+  - x86
 ---
 
 ## Scope and ethics

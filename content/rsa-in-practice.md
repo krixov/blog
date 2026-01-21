@@ -3,6 +3,11 @@ title: "RSA in Practice: From Number Theory to Secure Padding"
 date: "2024-12-05"
 excerpt: "A deep dive into RSA math, key generation, and why padding makes or breaks security."
 featured: "/images/test1.jpg"
+tags:
+  - cryptography
+  - rsa
+  - security
+  - math
 ---
 
 ## Why RSA still matters

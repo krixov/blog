@@ -3,6 +3,11 @@ title: "Threat Modeling a Web App: STRIDE to Controls"
 date: "2024-12-02"
 excerpt: "From data flow diagrams to security controls, with templates you can reuse."
 featured: "/images/test1.jpg"
+tags:
+  - threat-modeling
+  - stride
+  - security
+  - web
 ---
 
 ## Why threat modeling is practical
