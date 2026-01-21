@@ -14,12 +14,24 @@ import rehypeContentAssets from '@/lib/rehype-content-assets';
 interface PageProps {
   page: {
     title: string
-    lastUpdated: string
+    lastUpdated: string | null
     content: string
   }
 }
 
+const formatDate = (
+  value: string | null | undefined,
+  locale: string,
+  options?: Intl.DateTimeFormatOptions
+) => {
+  if (!value) return null;
+  const parsed = new Date(value);
+  if (Number.isNaN(parsed.getTime())) return null;
+  return parsed.toLocaleDateString(locale, options);
+};
+
 export default function Page({ page }: PageProps) {
+  const formattedLastUpdated = formatDate(page.lastUpdated, 'vi-VN');
   const content = unified()
     .use(remarkParse)
     .use(remarkMath)
@@ -40,9 +52,11 @@ export default function Page({ page }: PageProps) {
             className="prose prose-lg dark:prose-invert max-w-none"
             dangerouslySetInnerHTML={{ __html: content }} 
           />
-          <div className="mt-8 text-xs font-mono uppercase tracking-widest text-neutral-500 dark:text-neutral-400">
-            Last updated: {new Date(page.lastUpdated).toLocaleDateString('vi-VN')}
-          </div>
+          {formattedLastUpdated ? (
+            <div className="mt-8 text-xs font-mono uppercase tracking-widest text-neutral-500 dark:text-neutral-400">
+              Last updated: {formattedLastUpdated}
+            </div>
+          ) : null}
         </div>
       </div>
     </Layout>

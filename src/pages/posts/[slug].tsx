@@ -23,13 +23,29 @@ interface TocItem {
 interface PostProps {
   post: {
     title: string;
-    date: string;
+    date: string | null;
     content: string;
   }
 }
 
+const formatDate = (
+  value: string | null | undefined,
+  locale: string,
+  options?: Intl.DateTimeFormatOptions
+) => {
+  if (!value) return null;
+  const parsed = new Date(value);
+  if (Number.isNaN(parsed.getTime())) return null;
+  return parsed.toLocaleDateString(locale, options);
+};
+
 export default function Post({ post }: PostProps) {
   const [headings, setHeadings] = useState<TocItem[]>([]);
+  const formattedDate = formatDate(post.date, 'en-EN', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
 
   useEffect(() => {
     const articleContent = document.querySelector('.prose');
@@ -112,13 +128,11 @@ export default function Post({ post }: PostProps) {
                   Back to home
                 </Link>
                 <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight mb-4 text-neutral-900 dark:text-white">{post.title}</h1>
-                <time className="text-xs font-mono uppercase tracking-widest text-neutral-500 dark:text-neutral-400">
-                  {new Date(post.date).toLocaleDateString('en-EN', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                  })}
-                </time>
+                {formattedDate ? (
+                  <time className="text-xs font-mono uppercase tracking-widest text-neutral-500 dark:text-neutral-400">
+                    {formattedDate}
+                  </time>
+                ) : null}
               </div>
               
               <div className="prose prose-lg mx-auto surface-panel rounded-xl p-6 dark:prose-invert text-neutral-900 dark:text-neutral-100">
@@ -150,6 +164,11 @@ export async function getStaticProps({
   params: { slug: string }
 }) {
   const post = getPostBySlug(params.slug)
+  if (!post) {
+    return {
+      notFound: true
+    }
+  }
   return {
     props: { post }
   }
