@@ -46,9 +46,10 @@ yarn dev
 
 ```
 Tech-Blog/
-├── content/           # Markdown posts
+├── content/           # Markdown posts + assets
+│   ├── images/       # Post images (served via /api/content/images)
 │   └── pages/        # Static pages (about, etc.)
-├── public/           # Static assets (images, etc.)
+├── public/           # Static assets (favicon, etc.)
 └── src/
     ├── components/   # React components
     ├── layouts/      # Layout components
@@ -69,7 +70,8 @@ excerpt: "A brief description of your post"
 featured: "/images/featured.jpg"
 ---
 ```
-3. Write your post content in Markdown
+3. Put images in `content/images` and reference them with `/images/...` or `images/...`
+4. Write your post content in Markdown
 
 ## Tech Stack
 

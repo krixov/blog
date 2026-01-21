@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
+import { resolveContentAssetUrl } from '@/lib/content-assets'
 
 const postsDirectory = path.join(process.cwd(), 'content')
 const pagesDirectory = path.join(process.cwd(), 'content', 'pages')
@@ -21,7 +22,7 @@ export function getAllPosts() {
         title: data.title,
         date: data.date,
         excerpt: data.excerpt,
-        featured: data.featured || null,
+        featured: resolveContentAssetUrl(data.featured || null),
         content
       }
     })
@@ -39,7 +40,7 @@ export function getPostBySlug(slug: string) {
       title: data.title,
       date: data.date,
       excerpt: data.excerpt,
-      featured: data.featured || null,
+      featured: resolveContentAssetUrl(data.featured || null),
       content
     }
   } catch (error) {

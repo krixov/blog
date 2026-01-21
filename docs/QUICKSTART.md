@@ -41,7 +41,7 @@ npm run clean
 
 - `content/*.md`: posts (route: `/posts/<slug>`)
 - `content/pages/*.md`: static pages (route: `/<slug>`)
-- `public/images/*`: static images (use in Markdown or `featured`)
+- `content/images/*`: post images (served via `/api/content/images`, referenced as `/images/...`)
 
 Slug comes from the filename. Example: `content/hello-world.md` -> `/posts/hello-world`.
 
@@ -105,4 +105,4 @@ Standard Next.js deployment: `npm run build` + `npm start` or Vercel.
 
 - Post not showing: ensure the file is in `content/` (not a subfolder) and ends with `.md`.
 - Wrong order: check `date` in frontmatter.
-- Images not loading: use absolute paths like `/images/...` and put files in `public/images/`.
+- Images not loading: use `/images/...` (or `images/...`) and put files in `content/images/`.

@@ -8,6 +8,7 @@ import remarkRehype from 'remark-rehype'
 import rehypeKatex from 'rehype-katex'
 import rehypeStringify from 'rehype-stringify'
 import remarkEmoji from 'remark-emoji';
+import rehypeContentAssets from '@/lib/rehype-content-assets';
 
 
 interface PageProps {
@@ -25,6 +26,7 @@ export default function Page({ page }: PageProps) {
     .use(remarkGfm)
     .use(remarkRehype)
     .use(remarkEmoji)
+    .use(rehypeContentAssets)
     .use(rehypeKatex)
     .use(rehypeStringify)
     .processSync(page.content)

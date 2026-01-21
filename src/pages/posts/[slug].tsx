@@ -11,6 +11,7 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react';
 import TableOfContents from '@/components/TableOfContents';
 import remarkEmoji from 'remark-emoji'
+import rehypeContentAssets from '@/lib/rehype-content-assets'
 
 // Thêm interface cho heading
 interface TocItem {
@@ -94,6 +95,7 @@ export default function Post({ post }: PostProps) {
     .use(remarkGfm)
     .use(remarkRehype)
     .use(remarkEmoji) 
+    .use(rehypeContentAssets)
     .use(rehypeKatex)
     .use(rehypeStringify)
     .processSync(post.content)
