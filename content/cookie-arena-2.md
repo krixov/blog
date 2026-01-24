@@ -1,11 +1,12 @@
 ---
 title: "Cookie Arena 2 | Reverse Engineering"
-cover: /images/cookie_arena_2/featured.png
-description: Clear Reverse Engineering giải Cookie Arena mùa 2
-date: 2023-07-09T11:00:00-07:00
-lastmod: 2023-07-09T11:00:00-07:00
-tags: ["Reverse Engineering", "Writeups"]
-categories: ["CTF"]
+date: "2023-07-09"
+excerpt: "Clear Reverse Engineering giải Cookie Arena mùa 2"
+featured: "/images/cookie_arena_2/featured.png"
+tags:
+  - "Reverse Engineering"
+  - "Writeups"
+  - "CTF"
 ---
 
 ![](/images/cookie_arena_2/featured.png)

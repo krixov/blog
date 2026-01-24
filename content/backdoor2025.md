@@ -1,23 +1,11 @@
 ---
 title: "Writeups Backdoor CTF 2025"
-cover: images/backdoorctf2025/backdoor_banner.png
-description: Writeups Backdoor CTF 2025
-date: 2025-12-08T11:00:00-07:00
-lastmod: 2025-12-08T11:00:00-07:00
-tag: ["Writeups"]
-categories: ["CTF"]
----
-
----
-title: "Binary Exploitation Lab: Stack Overflows, NX, and ROP"
-date: "2024-12-03"
-excerpt: "A practical lab writeup covering crash analysis, mitigations, and a minimal ROP chain."
-featured: "/images/test3.jpg"
+date: "2025-12-08"
+excerpt: "Writeups Backdoor CTF 2025"
+featured: "images/backdoorctf2025/backdoor_banner.png"
 tags:
-  - pwn
-  - binary-exploitation
-  - rop
-  - linux
+  - "Writeups"
+  - "CTF"
 ---
 
 # Writeups - Backdoor CTF 2025

@@ -1,11 +1,12 @@
 ---
 title: "Backdoor CTF 2023 | Reverse Engineering"
-cover: /images/backdoorctf-2023-re/featured.png
-description: The last CTF i joined in 2023. Happy New Year!!!
-date: 2023-12-18T11:00:00-07:00
-lastmod: 2023-12-18T11:00:00-07:00
-categories: ["CTF"]
-tags: ["Reverse Engineering", "Writeups"]
+date: "2023-12-18"
+excerpt: "The last CTF i joined in 2023. Happy New Year!!!"
+featured: "/images/backdoorctf-2023-re/featured.png"
+tags:
+  - "Reverse Engineering"
+  - "Writeups"
+  - "CTF"
 ---
 
 ![](/images/backdoorctf-2023-re/featured.png)

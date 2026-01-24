@@ -1,11 +1,12 @@
 ---
 title: "UMDCTF 2023 | Digital Forensics"
-cover: /images/writeups-forensics-umdctf/featured.png
-description: Writeup 7/8 digital forensics challs in UMDCTF 2023.
-date: 2023-05-17T11:00:00-07:00
-lastmod: 2023-05-17T11:00:00-07:00
-tags: ["Digital Forensics", "Writeups"]
-categories: ["CTF"]
+date: "2023-05-17"
+excerpt: "Writeup 7/8 digital forensics challs in UMDCTF 2023."
+featured: "/images/writeups-forensics-umdctf/featured.png"
+tags:
+  - "Digital Forensics"
+  - "Writeups"
+  - "CTF"
 ---
 
 ![](/images/writeups-forensics-umdctf/featured.png)

@@ -1,6 +1,9 @@
 ---
 title: "About Me"
-lastUpdated: "2024-03-15"
+date: "2024-03-15"
+excerpt: "About sondt (nosiaht), a computer engineering student and security researcher focused on CTFs."
+featured: "/images/spid3r.png"
+tags: []
 ---
 
 ![](/images/spid3r.png)

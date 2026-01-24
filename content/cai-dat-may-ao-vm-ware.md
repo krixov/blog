@@ -1,10 +1,10 @@
 ---
 title: "Hướng Dẫn Cài Đặt máy ảo sử dụng VMware Workstation/Fusion"
-cover: /images/cai-dat-may-ao-vm-ware/featured.png
-description: Cách cài đặt máy ảo trong VMware!
-date: 2020-02-07T11:00:00-07:00
-lastmod: 2020-02-07T11:00:00-07:00
-tags: ["Trick"]
+date: "2020-02-07"
+excerpt: "Cách cài đặt máy ảo trong VMware!"
+featured: "/images/cai-dat-may-ao-vm-ware/featured.png"
+tags:
+  - "Trick"
 ---
 
 ## **Hướng Dẫn Cài Đặt máy ảo sử dụng VMware Workstation/Fusion**

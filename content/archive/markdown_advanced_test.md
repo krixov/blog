@@ -4,9 +4,9 @@ date: "2024-11-15"
 excerpt: "Testing advanced Markdown features."
 featured: "/images/test2.jpg"
 tags:
-  - markdown
-  - advanced
-  - demo
+  - "markdown"
+  - "advanced"
+  - "demo"
 ---
 
 # Advanced Markdown Test

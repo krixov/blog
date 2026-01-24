@@ -1,11 +1,11 @@
 ---
 title: "Cyber SEA Game 2023 | Recap"
-cover: /images/cyberseagame2023/featured.png
-description: This post is a recap of my team's journey participating in the Cyber SEA Game 2023 in Bangkok, Thailand (November 9-10, 2023).
-date: 2023-11-10T11:00:00-07:00
-lastmod: 2023-11-10T11:00:00-07:00
-tag: ["Global"]
-categories: ["CTF"]
+date: "2023-11-10"
+excerpt: "This post is a recap of my team's journey participating in the Cyber SEA Game 2023 in Bangkok, Thailand (November 9-10, 2023)."
+featured: "/images/cyberseagame2023/featured.png"
+tags:
+  - "Global"
+  - "CTF"
 ---
 
 ![](/images/cyberseagame2023/featured.png)

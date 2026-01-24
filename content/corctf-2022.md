@@ -1,13 +1,13 @@
 ---
 title: "CorCTF 2022 | Reverse Engineering"
-cover: /images/corctf2022-re/featured-image.png
-description: CorCTF 2022 | Reverse Engineering
-date: 2022-08-09T11:00:00-07:00
-lastmod: 2022-08-09T11:00:00-07:00
-tags: ["Reverse Engineering", "Writeups"]
-categories: ["CTF"]
+date: "2022-08-09"
+excerpt: "CorCTF 2022 | Reverse Engineering"
+featured: "/images/corctf2022-re/featured-image.png"
+tags:
+  - "Reverse Engineering"
+  - "Writeups"
+  - "CTF"
 ---
-
 
 ![](/images/corctf2022-re/featured-image.png)
 

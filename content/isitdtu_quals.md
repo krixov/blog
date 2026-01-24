@@ -1,12 +1,13 @@
 ---
 title: "Writeups ISITDTU 2024 (Quals)"
-cover: images/isitdtu_quals/featured.png
-description: Writeups ISITDTU 2024 (Quals)
-date: 2024-10-27T11:00:00-07:00
-lastmod: 2024-10-27T11:00:00-07:00
-tag: ["Writeups"]
-categories: ["CTF"]
+date: "2024-10-27"
+excerpt: "Writeups ISITDTU 2024 (Quals)"
+featured: "images/isitdtu_quals/featured.png"
+tags:
+  - "Writeups"
+  - "CTF"
 ---
+
 # Writeups ISITDTU 2024 (Quals)
 We participated in the ISITDTU CTF 2024 competition, finishing in 15th place out of 315 teams with 21 challenges successfully solved. 
 

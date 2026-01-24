@@ -1,10 +1,12 @@
 ---
 title: "Security Cameras: Safety or Illusion?"
-cover: https://hackmd.io/_uploads/HkMSwoZ81l.png
-date: 2024-01-01T01:00:00-07:00
-lastmod: 2024-01-01T01:00:00-07:00
-tags: ["Trick", "Security"]
-categories: ["IoT"]
+date: "2024-01-01"
+excerpt: "A personal look at a legacy XVR camera setup and the risks of default access."
+featured: "https://hackmd.io/_uploads/HkMSwoZ81l.png"
+tags:
+  - "Trick"
+  - "Security"
+  - "IoT"
 ---
 
 > Hey everyone, today I want to share a bit about my family's camera system - installed since 2018 with nearly 10 old units and a few newer models. The "newer" ones are better because they have modern features like viewing through apps, two-way communication, and are completely separate from the old models that only know how to record through cables.

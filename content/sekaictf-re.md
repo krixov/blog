@@ -1,11 +1,12 @@
 ---
 title: "SekaiCTF 2023 | Reverse Engineering"
-cover: /images/sekaictf-re/featured-image.png
-description: Wibu time, this writeup is about the RE challenges I solved in SekaiCTF 2023
-date: 2023-08-27T11:00:00-07:00
-lastmod: 2023-08-27T11:00:00-07:00
-tags: ["Reverse Engineering", "Writeups"]
-categories: ["CTF"]
+date: "2023-08-27"
+excerpt: "Wibu time, this writeup is about the RE challenges I solved in SekaiCTF 2023"
+featured: "/images/sekaictf-re/featured-image.png"
+tags:
+  - "Reverse Engineering"
+  - "Writeups"
+  - "CTF"
 ---
 
 ![](/images/sekaictf-re/featured-image.png)

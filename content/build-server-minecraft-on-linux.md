@@ -1,12 +1,11 @@
 ---
 title: "Guide to Building a Minecraft Server on Linux – Simple and Professional"
-cover: https://tmdpc.vn/media/news/0206_CuhnhchiMinecrafttrnPCkhnglogitlag1.jpg
-description: A detailed guide on how to set up a Minecraft server on Linux, tailored for both beginners and professionals
-date: 2022-11-20T11:00:00-07:00
-lastmod: 2022-11-20T11:00:00-07:00
-tags: ["Trick"]
+date: "2022-11-20"
+excerpt: "A detailed guide on how to set up a Minecraft server on Linux, tailored for both beginners and professionals"
+featured: "https://tmdpc.vn/media/news/0206_CuhnhchiMinecrafttrnPCkhnglogitlag1.jpg"
+tags:
+  - "Trick"
 ---
-
 
 Minecraft, one of the most popular sandbox games, allows players to unleash creativity, explore, and survive in an infinite world. Setting up your own Minecraft server to play with friends is an incredibly rewarding experience. This guide walks you through the process of creating a Minecraft server on Linux, from installation to configuration and connecting with friends.
 

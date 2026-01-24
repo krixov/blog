@@ -1,10 +1,10 @@
 ---
 title: "Kali Linux VPS for Free: A Segfault Tutorial That Makes It Possible"
-cover: https://hackmd.io/_uploads/Hk9g7yPWyg.png
-description: Kali Linux VPS for Free
-date: 2023-05-05T11:00:00-07:00
-lastmod: 2023-05-05T11:00:00-07:00
-tag: [Trick]
+date: "2023-05-05"
+excerpt: "Kali Linux VPS for Free"
+featured: "https://hackmd.io/_uploads/Hk9g7yPWyg.png"
+tags:
+  - "Trick"
 ---
 
 ![image](https://hackmd.io/_uploads/Hk9g7yPWyg.png)
