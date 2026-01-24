@@ -10,6 +10,7 @@ import rehypeStringify from 'rehype-stringify'
 import remarkEmoji from 'remark-emoji';
 import rehypeContentAssets from '@/lib/rehype-content-assets';
 import { siteConfig } from '@/config/site';
+import rehypePrism from '@/lib/rehype-prism';
 
 
 interface PageProps {
@@ -41,6 +42,7 @@ export default function Page({ page }: PageProps) {
     .use(remarkRehype)
     .use(rehypeContentAssets)
     .use(rehypeKatex)
+    .use(rehypePrism)
     .use(rehypeStringify)
     .processSync(page.content)
     .toString()

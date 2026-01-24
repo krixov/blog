@@ -14,6 +14,7 @@ import remarkEmoji from 'remark-emoji'
 import rehypeContentAssets from '@/lib/rehype-content-assets'
 import TagList from '@/components/TagList';
 import { siteConfig } from '@/config/site';
+import rehypePrism from '@/lib/rehype-prism';
 
 // Thêm interface cho heading
 interface TocItem {
@@ -123,6 +124,7 @@ export default function Post({ post }: PostProps) {
     .use(remarkRehype)
     .use(rehypeContentAssets)
     .use(rehypeKatex)
+    .use(rehypePrism)
     .use(rehypeStringify)
     .processSync(post.content)
     .toString()
