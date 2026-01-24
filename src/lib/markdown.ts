@@ -2,6 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
 import { resolveContentAssetUrl } from '@/lib/content-assets'
+import type { TimelineEntry } from '@/types/timeline'
 
 const postsDirectory = path.join(process.cwd(), 'content')
 const pagesDirectory = path.join(process.cwd(), 'content', 'pages')
@@ -31,6 +32,38 @@ const normalizeTags = (value: unknown): string[] => {
   }
 
   return []
+}
+
+const normalizeTimelineEntries = (value: unknown): TimelineEntry[] => {
+  if (!Array.isArray(value)) return []
+
+  return value
+    .map((entry) => {
+      if (!entry || typeof entry !== 'object') return null
+      const raw = entry as Record<string, unknown>
+      const year =
+        typeof raw.year === 'number' || typeof raw.year === 'string'
+          ? String(raw.year).trim()
+          : ''
+      const place = typeof raw.place === 'string' ? raw.place.trim() : ''
+      const role = typeof raw.role === 'string' ? raw.role.trim() : ''
+      const category = typeof raw.category === 'string' ? raw.category.trim() : ''
+      const detail = typeof raw.detail === 'string' ? raw.detail.trim() : ''
+
+      if (!year || !place) return null
+
+      const normalized: TimelineEntry = {
+        year,
+        place
+      }
+
+      if (role) normalized.role = role
+      if (category) normalized.category = category
+      if (detail) normalized.detail = detail
+
+      return normalized
+    })
+    .filter((entry): entry is TimelineEntry => Boolean(entry))
 }
 
 const countMatches = (value: string, regex: RegExp): number => {
@@ -140,6 +173,7 @@ export function getPage(slug: string) {
       slug,
       title: data.title,
       lastUpdated: data.lastUpdated ? String(data.lastUpdated) : null,
+      timeline: normalizeTimelineEntries(data.timeline),
       content
     }
   } catch (error) {

@@ -11,13 +11,17 @@ import remarkEmoji from 'remark-emoji';
 import rehypeContentAssets from '@/lib/rehype-content-assets';
 import { siteConfig } from '@/config/site';
 import rehypePrism from '@/lib/rehype-prism';
+import Timeline from '@/components/Timeline';
+import type { TimelineEntry } from '@/types/timeline';
 
 
 interface PageProps {
   page: {
+    slug: string
     title: string
     lastUpdated: string | null
     content: string
+    timeline: TimelineEntry[]
   }
 }
 
@@ -55,6 +59,7 @@ export default function Page({ page }: PageProps) {
             className="prose dark:prose-invert max-w-none"
             dangerouslySetInnerHTML={{ __html: content }} 
           />
+          {page.timeline.length > 0 ? <Timeline entries={page.timeline} /> : null}
           {formattedLastUpdated ? (
             <div className="mt-8 text-xs font-mono uppercase tracking-widest text-neutral-500 dark:text-neutral-400">
               {siteConfig.page.lastUpdatedLabel} {formattedLastUpdated}
