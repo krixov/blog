@@ -11,6 +11,8 @@ interface LayoutProps {
 export default function Layout({ children, title = 'Blog' }: LayoutProps) {
   const [isDark, setIsDark] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
+  const isExternalLink = (href: string) =>
+    href.startsWith('http://') || href.startsWith('https://') || href.startsWith('//')
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme')
@@ -125,7 +127,7 @@ export default function Layout({ children, title = 'Blog' }: LayoutProps) {
               <div className="flex items-center space-x-6">
                 {/* <Link href="/" className="nav-link">Home</Link> */}
                 {siteConfig.nav.links.map((link) =>
-                  link.external ? (
+                  isExternalLink(link.href) ? (
                     <a
                       key={link.label}
                       href={link.href}
