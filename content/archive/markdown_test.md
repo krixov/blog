@@ -4,9 +4,9 @@ date: "2024-11-14"
 excerpt: "Testing all Markdown features in one place."
 featured: "/images/test3.jpg"
 tags:
-  - markdown
-  - demo
-  - formatting
+  - "markdown"
+  - "demo"
+  - "formatting"
 ---
 
 # Markdown Test
