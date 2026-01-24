@@ -58,18 +58,17 @@ const formatDate = (iso?: string | null) => {
   );
 };
 
-export default function OpenSourceStatus({ siteCommit }: { siteCommit?: string | null }) {
+export default function OpenSourceStatus() {
   const [state, setState] = useState<StatusState>({ status: 'idle', data: null });
 
   useEffect(() => {
     let cancelled = false;
     const controller = new AbortController();
-    const query = siteCommit ? `?siteCommit=${encodeURIComponent(siteCommit)}` : '';
 
     const load = async () => {
       setState({ status: 'loading', data: null });
       try {
-        const res = await fetch(`/api/open-source-status${query}`, {
+        const res = await fetch('/api/open-source-status', {
           signal: controller.signal
         });
         if (!res.ok) {
@@ -92,7 +91,7 @@ export default function OpenSourceStatus({ siteCommit }: { siteCommit?: string |
       cancelled = true;
       controller.abort();
     };
-  }, [siteCommit]);
+  }, []);
 
   const summary = useMemo(() => {
     if (state.status === 'loading' || state.status === 'idle') {
@@ -108,17 +107,21 @@ export default function OpenSourceStatus({ siteCommit }: { siteCommit?: string |
       if (state.data.siteCommit) {
         const isSame = state.data.latestCommit.sha === state.data.siteCommit;
         return {
-          label: isSame ? 'Up to date' : 'Outdated',
-          tone: isSame ? ('ok' as StatusTone) : ('warn' as StatusTone)
+          label: isSame ? 'Up to date' : 'Status unknown',
+          tone: isSame ? ('ok' as StatusTone) : ('neutral' as StatusTone)
         };
       }
+      return { label: 'Status unknown', tone: 'neutral' as StatusTone };
+    }
+
+    if (comparison.status === 'unknown') {
       return { label: 'Status unknown', tone: 'neutral' as StatusTone };
     }
 
     const isOutdated =
       comparison.status === 'behind' ||
       comparison.status === 'diverged' ||
-      (comparison.aheadBy ?? 0) > 0;
+      (comparison.behindBy ?? 0) > 0;
 
     return {
       label: isOutdated ? 'Outdated' : 'Up to date',
@@ -140,7 +143,7 @@ export default function OpenSourceStatus({ siteCommit }: { siteCommit?: string |
       if (state.data.siteCommit) {
         const isSame = state.data.latestCommit.sha === state.data.siteCommit;
         return {
-          statusText: isSame ? 'Matches latest commit' : 'Update status unknown',
+          statusText: isSame ? 'On latest commit' : 'Status unknown',
           compareUrl: null
         };
       }
@@ -151,21 +154,21 @@ export default function OpenSourceStatus({ siteCommit }: { siteCommit?: string |
     }
 
     if (comparison.status === 'identical') {
-      return { statusText: 'Identical to upstream', compareUrl: comparison.url };
+      return { statusText: 'On latest commit', compareUrl: comparison.url };
     }
 
-    if (comparison.status === 'behind') {
+    if (comparison.status === 'ahead') {
       const aheadBy = comparison.aheadBy ?? 0;
       return {
-        statusText: `Behind by ${aheadBy} commit${aheadBy === 1 ? '' : 's'}`,
+        statusText: `Ahead by ${aheadBy} commit${aheadBy === 1 ? '' : 's'}`,
         compareUrl: comparison.url
       };
     }
 
-    if (comparison.status === 'ahead') {
+    if (comparison.status === 'behind') {
       const behindBy = comparison.behindBy ?? 0;
       return {
-        statusText: `Ahead by ${behindBy} commit${behindBy === 1 ? '' : 's'}`,
+        statusText: `Behind by ${behindBy} commit${behindBy === 1 ? '' : 's'}`,
         compareUrl: comparison.url
       };
     }
@@ -174,13 +177,13 @@ export default function OpenSourceStatus({ siteCommit }: { siteCommit?: string |
       const aheadBy = comparison.aheadBy ?? 0;
       const behindBy = comparison.behindBy ?? 0;
       return {
-        statusText: `Diverged (behind ${aheadBy}, ahead ${behindBy})`,
+        statusText: `Diverged (behind ${behindBy}, ahead ${aheadBy})`,
         compareUrl: comparison.url
       };
     }
 
     return {
-      statusText: 'Comparison unknown',
+      statusText: 'Status unknown',
       compareUrl: comparison.url
     };
   }, [state.data]);
@@ -237,14 +240,8 @@ export default function OpenSourceStatus({ siteCommit }: { siteCommit?: string |
           <div>
             Site commit:{' '}
             <span className="font-mono">
-              {siteCommit ? shortSha(siteCommit) : 'not set'}
+              {state.data?.siteCommit ? shortSha(state.data.siteCommit) : 'unknown'}
             </span>
-            {!siteCommit && (
-              <span className="text-neutral-400 dark:text-neutral-500">
-                {' '}
-                (set NEXT_PUBLIC_SITE_COMMIT to enable compare)
-              </span>
-            )}
           </div>
           <div>
             Status: <span className="font-mono">{detailLines.statusText}</span>

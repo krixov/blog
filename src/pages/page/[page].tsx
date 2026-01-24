@@ -1,16 +1,14 @@
 import { GetServerSideProps } from 'next';
 import { getAllPosts } from '@/lib/markdown';
-import { getSiteCommit } from '@/lib/siteCommit';
 import { POSTS_PER_PAGE } from '../index';
 import Home, { HomeProps } from '../index';
 
-const PageComponent = ({ posts, currentPage, totalPages, siteCommit }: HomeProps) => {
+const PageComponent = ({ posts, currentPage, totalPages }: HomeProps) => {
   return (
     <Home 
       posts={posts}
       currentPage={currentPage}
       totalPages={totalPages}
-      siteCommit={siteCommit}
     />
   );
 };
@@ -38,8 +36,6 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
   const endIndex = startIndex + POSTS_PER_PAGE;
   const paginatedPosts = allPosts.slice(startIndex, endIndex);
-  const siteCommit = getSiteCommit({ allowGit: false });
-
   return {
     props: {
       posts: paginatedPosts.map((post) => ({
@@ -52,7 +48,6 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
       })),
       currentPage,
       totalPages,
-      siteCommit,
     },
   };
 };

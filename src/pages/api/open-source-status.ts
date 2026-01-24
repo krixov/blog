@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { siteConfig } from '@/config/site';
+import { getSiteCommitFromEnv } from '@/lib/siteCommit';
 
 type ComparisonStatus = 'identical' | 'ahead' | 'behind' | 'diverged' | 'unknown';
 
@@ -37,13 +38,15 @@ function isLikelySha(value: string) {
 }
 
 export default async function handler(
-  req: NextApiRequest,
+  _req: NextApiRequest,
   res: NextApiResponse<OpenSourceStatusResponse | { error: string }>
 ) {
   const { owner, repo, branch, repoUrl } = siteConfig.openSource;
-  const siteCommit = typeof req.query.siteCommit === 'string' && isLikelySha(req.query.siteCommit)
-    ? req.query.siteCommit.trim()
-    : null;
+  const rawSiteCommit = getSiteCommitFromEnv();
+  const siteCommit = rawSiteCommit && isLikelySha(rawSiteCommit) ? rawSiteCommit : null;
+  const headOwner = process.env.VERCEL_GIT_REPO_OWNER || null;
+  const headRef = process.env.VERCEL_GIT_COMMIT_REF || null;
+  const head = headOwner && headRef ? `${headOwner}:${headRef}` : null;
 
   const headers: Record<string, string> = {
     Accept: 'application/vnd.github+json',
@@ -56,7 +59,10 @@ export default async function handler(
   }
 
   try {
-    const latestRes = await fetch(`${API_BASE}/repos/${owner}/${repo}/commits/${branch}`, { headers });
+    const latestRes = await fetch(
+      `${API_BASE}/repos/${owner}/${repo}/commits/${encodeURIComponent(branch)}`,
+      { headers }
+    );
     if (!latestRes.ok) {
       res.status(502).json({ error: 'Failed to fetch latest commit' });
       return;
@@ -72,9 +78,9 @@ export default async function handler(
 
     let comparison: OpenSourceStatusResponse['comparison'] = null;
 
-    if (siteCommit) {
+    if (head) {
       const compareRes = await fetch(
-        `${API_BASE}/repos/${owner}/${repo}/compare/${siteCommit}...${branch}`,
+        `${API_BASE}/repos/${owner}/${repo}/compare/${encodeURIComponent(branch)}...${encodeURIComponent(head)}`,
         { headers }
       );
 
