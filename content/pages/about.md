@@ -1,7 +1,7 @@
 ---
 title: "About Me"
 date: "2024-03-15"
-excerpt: "About sondt (nosiaht), a computer engineering student and security researcher focused on CTFs."
+excerpt: "About sondt (nosiaht), a security researcher focused on CTFs."
 featured: "/images/spid3r.png"
 timeline:
   - year: "2025"
@@ -13,14 +13,14 @@ timeline:
     place: "VinFast"
     role: "IoT Security Engineer"
   - year: "2021"
-    category: "Study"
+    category: "Education"
     place: "Hanoi University of Science and Technology"
     role: "B.Sc. in Computer Engineering"
 ---
 
 ![](/images/spid3r.png)
 ## My name is Spid3r
-Hey, I'm **sondt**, also known by the nickname **nosiaht**. I’m currently studying **Computer Engineering** at **Hanoi University of Science & Technology (HUST)**.. Additionally, I am currently employed in the field of Malware Analysis | Security Researcher at ... and **BKSec [Bach Khoa Cyber Security Student Club]**. I participate in CTF competitions, focusing on `Reverse Engineering`, `Binary Exploitation` and `Digital Forensics`.
+Hey, I'm **sondt**, also known as **nosiaht**. I work in (IoT) security research, and I enjoy CTFs focused on `Reverse Engineering`, `Binary Exploitation`, and `Digital Forensics`.
 
 ## About this site
 
