@@ -4,14 +4,18 @@ date: "2024-03-15"
 excerpt: "About sondt (nosiaht), a computer engineering student and security researcher focused on CTFs."
 featured: "/images/spid3r.png"
 timeline:
+  - year: "2025"
+    category: "Work"
+    place: "VinSOC, Vingroup"
+    role: "Security Researcher"
   - year: "2024"
     category: "Work"
-    place: "Company Name"
-    role: "Security Engineer"
-  - year: "2022"
+    place: "VinFast"
+    role: "IoT Security Engineer"
+  - year: "2021"
     category: "Study"
-    place: "University Name"
-    role: "B.Sc. in Information Security"
+    place: "Hanoi University of Science and Technology"
+    role: "B.Sc. in Computer Engineering"
 ---
 
 ![](/images/spid3r.png)
