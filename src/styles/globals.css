@@ -184,6 +184,8 @@ body {
          prose-blockquote:border-l-2
          prose-blockquote:border-neutral-300
          prose-blockquote:text-neutral-700
+         prose-img:block
+         prose-img:mx-auto
          prose-img:rounded-xl
          prose-img:shadow
          prose-img:transition-transform
@@ -199,6 +201,27 @@ body {
          prose-strong:text-white
          prose-blockquote:border-neutral-700
          prose-blockquote:text-neutral-300;
+}
+
+.prose p > a:only-child {
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.prose figure {
+  margin: 1.25em auto;
+  text-align: center;
+}
+
+.prose figure a {
+  display: inline-block;
+}
+
+.prose figcaption {
+  margin-top: 0.6em;
+  font-size: 0.75rem;
+  color: var(--muted-2);
 }
 
 .prose h2 {
