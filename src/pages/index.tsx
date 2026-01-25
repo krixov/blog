@@ -66,31 +66,34 @@ export default function Home({ posts, currentPage, totalPages }: HomeProps) {
               className="group relative overflow-hidden rounded-2xl surface-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lg rise-in"
               style={{ animationDelay: `${120 + index * 80}ms` }}
             >
-              <Link href={`/posts/${post.slug}`}>
-                {post.featured && (
-                  <div className="relative h-64 w-full overflow-hidden border-b border-neutral-200/70 dark:border-neutral-800">
-                    <Image
-                      src={post.featured}
-                      alt={post.title || siteConfig.home.featuredAlt}
-                      fill
-                      sizes="(min-width: 1024px) 800px, 100vw"
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                      priority={index === 0}
-                    />
-                  </div>
-                )}
-                <div className="p-8 sm:p-10">
-                  <div className="mb-4 space-y-3">
-                    <time className="text-xs font-mono uppercase tracking-widest text-neutral-500 dark:text-neutral-400">
-                      {post.date
-                        ? new Date(post.date).toLocaleDateString(
-                            siteConfig.formatting.dateLocale,
-                            siteConfig.formatting.dateOptions
-                          )
-                        : siteConfig.home.noDateLabel}
-                    </time>
-                    <TagList tags={post.tags} />
-                  </div>
+              {post.featured && (
+                <Link
+                  href={`/posts/${post.slug}`}
+                  className="block relative h-64 w-full overflow-hidden border-b border-neutral-200/70 dark:border-neutral-800"
+                >
+                  <Image
+                    src={post.featured}
+                    alt={post.title || siteConfig.home.featuredAlt}
+                    fill
+                    sizes="(min-width: 1024px) 800px, 100vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    priority={index === 0}
+                  />
+                </Link>
+              )}
+              <div className="p-8 sm:p-10">
+                <div className="mb-4 space-y-3">
+                  <time className="text-xs font-mono uppercase tracking-widest text-neutral-500 dark:text-neutral-400">
+                    {post.date
+                      ? new Date(post.date).toLocaleDateString(
+                          siteConfig.formatting.dateLocale,
+                          siteConfig.formatting.dateOptions
+                        )
+                      : siteConfig.home.noDateLabel}
+                  </time>
+                  <TagList tags={post.tags} />
+                </div>
+                <Link href={`/posts/${post.slug}`} className="block">
                   <h2 className="text-2xl font-semibold mb-3 text-neutral-900 dark:text-white transition-colors duration-200">
                     {post.title}
                   </h2>
@@ -102,8 +105,8 @@ export default function Home({ posts, currentPage, totalPages }: HomeProps) {
                       {siteConfig.home.readMoreLabel}
                     </span>
                   </div>
-                </div>
-              </Link>
+                </Link>
+              </div>
             </article>
           ))}
         </section>
