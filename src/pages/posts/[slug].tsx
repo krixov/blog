@@ -62,17 +62,25 @@ export default function Post({ post }: PostProps) {
     const articleContent = document.querySelector('.prose');
     if (articleContent) {
       const headingElements = articleContent.querySelectorAll('h2, h3, h4');
+      const slugCounts = new Map<string, number>();
+      const slugify = (value: string) =>
+        value
+          .toLowerCase()
+          .trim()
+          .replace(/\s+/g, '-')
+          .replace(/[^\w-]/g, '');
+
       const items: TocItem[] = Array.from(headingElements).map((heading) => {
-        // Tạo id nếu chưa có
-        if (!heading.id) {
-          heading.id = heading.textContent?.toLowerCase()
-            .replace(/\s+/g, '-')
-            .replace(/[^\w-]/g, '') || '';
-        }
-        
+        const text = heading.textContent || '';
+        const baseId = heading.id || slugify(text) || 'section';
+        const count = (slugCounts.get(baseId) || 0) + 1;
+        slugCounts.set(baseId, count);
+        const uniqueId = count === 1 ? baseId : `${baseId}-${count}`;
+        heading.id = uniqueId;
+
         return {
-          id: heading.id,
-          text: heading.textContent || '',
+          id: uniqueId,
+          text,
           level: parseInt(heading.tagName[1]),
         };
       });
