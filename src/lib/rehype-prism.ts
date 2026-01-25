@@ -33,6 +33,14 @@ const LANGUAGE_ALIASES: Record<string, string> = {
   shell: 'bash',
   zsh: 'bash'
 };
+const LANGUAGE_LABELS: Record<string, string> = {
+  javascript: 'JS',
+  typescript: 'TS',
+  markdown: 'MD',
+  md: 'MD',
+  csharp: 'C#',
+  cpp: 'CPP'
+};
 
 const isElement = (node: Node, tagName: string) =>
   node.type === 'element' && node.tagName === tagName;
@@ -94,6 +102,11 @@ const resolveLanguage = (language: string): string => {
   return LANGUAGE_ALIASES[language] ?? language;
 };
 
+const formatLanguageLabel = (language: string): string => {
+  const normalized = language.toLowerCase();
+  return (LANGUAGE_LABELS[normalized] ?? normalized).toUpperCase();
+};
+
 export default function rehypePrism() {
   return (tree: Node) => {
     const visit = (node: Node) => {
@@ -101,6 +114,12 @@ export default function rehypePrism() {
         const codeNode = node.children.find((child) => isElement(child, 'code'));
         if (codeNode) {
           const rawLanguage = getLanguage(codeNode);
+          if (rawLanguage && !IGNORED_LANGUAGES.has(rawLanguage)) {
+            node.properties = {
+              ...(node.properties ?? {}),
+              'data-language': formatLanguageLabel(rawLanguage)
+            };
+          }
           if (rawLanguage && !IGNORED_LANGUAGES.has(rawLanguage)) {
             const language = resolveLanguage(rawLanguage);
             const grammar =

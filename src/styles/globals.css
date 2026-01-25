@@ -18,6 +18,13 @@
   --shadow-strong: rgba(0, 0, 0, 0.14);
   --code-bg: #111111;
   --code-fg: #f8f8f2;
+  --code-header-bg: #1a1a1a;
+  --code-border: #2a2a2a;
+  --code-label: #cfcfcf;
+  --code-dot-red: #ff5f57;
+  --code-dot-yellow: #febc2e;
+  --code-dot-green: #28c840;
+  --code-header-height: 2.2rem;
   --inline-code-bg: rgba(0, 0, 0, 0.06);
   --inline-code-border: rgba(0, 0, 0, 0.12);
   --code-selection-bg: #44475a;
@@ -43,6 +50,13 @@
   --shadow-strong: rgba(0, 0, 0, 0.7);
   --code-bg: #0b0b0b;
   --code-fg: #f8f8f2;
+  --code-header-bg: #151515;
+  --code-border: #242424;
+  --code-label: #d2d2d2;
+  --code-dot-red: #ff5f57;
+  --code-dot-yellow: #febc2e;
+  --code-dot-green: #28c840;
+  --code-header-height: 2.2rem;
   --inline-code-bg: rgba(255, 255, 255, 0.08);
   --inline-code-border: rgba(255, 255, 255, 0.16);
   --code-selection-bg: #44475a;
@@ -294,9 +308,48 @@ body {
 }
 
 .prose pre {
-  background: var(--code-bg);
+  position: relative;
+  margin: 1.5rem 0;
+  padding: calc(var(--code-header-height) + 0.9rem) 1.5rem 1.35rem;
+  background:
+    linear-gradient(
+      to bottom,
+      var(--code-header-bg) 0,
+      var(--code-header-bg) var(--code-header-height),
+      var(--code-bg) var(--code-header-height),
+      var(--code-bg) 100%
+    );
   color: var(--code-fg);
-  @apply my-6 p-5 rounded-xl overflow-x-auto border border-neutral-800 shadow-sm;
+  border: 1px solid var(--code-border);
+  border-radius: 14px;
+  overflow-x: auto;
+  box-shadow: 0 12px 28px var(--shadow);
+}
+
+.prose pre::before {
+  content: '';
+  position: absolute;
+  top: 0.68rem;
+  left: 1rem;
+  width: 2.2rem;
+  height: 0.6rem;
+  background:
+    radial-gradient(circle at 0.3rem 0.3rem, var(--code-dot-red) 0.28rem, transparent 0.3rem),
+    radial-gradient(circle at 1.1rem 0.3rem, var(--code-dot-yellow) 0.28rem, transparent 0.3rem),
+    radial-gradient(circle at 1.9rem 0.3rem, var(--code-dot-green) 0.28rem, transparent 0.3rem);
+  opacity: 0.95;
+}
+
+.prose pre::after {
+  content: attr(data-language);
+  position: absolute;
+  top: 0.52rem;
+  left: 4rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--code-label);
+  font-family: 'JetBrains Mono', monospace;
 }
 
 .prose pre ::selection {
@@ -325,12 +378,23 @@ body {
 
 
 .copy-button {
-  @apply absolute right-2 top-2 rounded-md border border-white/20 bg-white/10 px-2 py-1 text-xs font-mono uppercase tracking-widest text-white
-         opacity-0 group-hover:opacity-100 transition-opacity duration-200;
+  position: absolute;
+  right: 0.9rem;
+  top: 0.45rem;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.65rem;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--code-label);
+  background-color: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--code-border);
+  border-radius: 0.5rem;
+  @apply opacity-0 group-hover:opacity-100 transition-opacity duration-200;
 }
 
 .copy-button:focus {
-  outline: 2px solid #ffffff;
+  outline: 2px solid var(--code-label);
   outline-offset: 2px;
 }
 
