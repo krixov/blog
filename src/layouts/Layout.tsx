@@ -32,66 +32,9 @@ export default function Layout({ children, title = 'Blog' }: LayoutProps) {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  useEffect(() => {
-    const fn1 = (x: string): HTMLElement | null => document.getElementById(x);
-    const fn2 = (y: string): string => btoa(y);
-    const fn3 = (z: string): string => atob(z);
-  
-    const fn4 = (arr: number[], key: number): string =>
-      arr
-        .filter((_, idx) => idx % 2 === 0)
-        .map((val) => val ^ key)
-        .reverse()
-        .map((charCode) => String.fromCharCode(charCode))
-        .join('');
-  
-    const fn5 = () => {
-      const el = fn1('x');
-      if (el) {
-        const dataSet = [15, 190, 31, 220, 21, 215, 20, 210, 8, 200];
-        const magicNum = 123;
-        const step1 = fn4(dataSet, magicNum);
-        const step2 = fn2(step1);
-        const step3 = fn3(step2);
-        el.textContent = step3;
-      }
-    };
-
-    const fn6 = (arr: number[], map: number[], key: number, shift: number): string => {
-      const restored = new Array(arr.length);
-      arr.forEach((val, idx) => {
-        restored[map[idx]] = val;
-      });
-      const codes = restored.map((val, idx) => (val - shift) ^ (key + idx));
-      const encoded = String.fromCharCode(...codes);
-      const binary = fn3(encoded);
-      const bytes = Uint8Array.from(binary, (char) => char.charCodeAt(0));
-      const decoded = new TextDecoder().decode(bytes);
-      return decoded.split('').reverse().join('');
-    };
-
-    const fn7 = () => {
-      const el = fn1('y');
-      if (el) {
-        const dataSet = [
-          104, 131, 95, 118, 109, 113, 129, 134, 81, 138,
-          119, 93, 102, 127, 102, 90, 123, 108, 101, 108
-        ];
-        const shuffle = [
-          7, 2, 15, 0, 11, 4, 18, 9, 1, 14,
-          6, 19, 8, 13, 3, 17, 5, 10, 12, 16
-        ];
-        const magicNum = 41;
-        const offset = 17;
-        el.textContent = fn6(dataSet, shuffle, magicNum, offset);
-      }
-    };
-  
-    fn5();
-    fn7();
-  }, []);
-
-
+  const currentYear = new Date().getFullYear()
+  const themeUrl = 'https://github.com/sondt99/Tech-Blog'
+  const authorName = siteConfig.author.name
 
 
   const toggleDarkMode = () => {
@@ -213,15 +156,17 @@ export default function Layout({ children, title = 'Blog' }: LayoutProps) {
             </div>
           </div>
           <div className="mt-6 pt-6 border-t border-neutral-200/70 dark:border-neutral-800 text-center text-neutral-500 dark:text-neutral-400">
-            <a
-              href="https://github.com/sondt99/Tech-Blog"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline decoration-neutral-400/70 underline-offset-4 transition-colors hover:text-neutral-700 dark:hover:text-neutral-300"
-            >
-              Theme by <span id="x"></span>
-            </a>{" "}
-            | <span id="y"></span>
+            <div className="flex flex-col items-center gap-1">
+              <a
+                href={themeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline decoration-neutral-400/70 underline-offset-4 transition-colors hover:text-neutral-700 dark:hover:text-neutral-300"
+              >
+                Theme by sondt
+              </a>
+              <div>content by © {authorName} {currentYear}</div>
+            </div>
           </div>
         </div>
       </footer>

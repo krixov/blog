@@ -3,6 +3,9 @@ const siteName = "sondt's Blog"
 export const siteConfig = {
   name: siteName,
   metaDescription: 'A professional blog about software development and technology',
+  author: {
+    name: 'nosiaht'
+  },
   nav: {
     links: [
       {
