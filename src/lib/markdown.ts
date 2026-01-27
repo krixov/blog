@@ -125,6 +125,24 @@ const calculatePostStats = (content: string): PostStats => {
   }
 }
 
+const parseDateToTimestamp = (value: unknown): number => {
+  if (typeof value !== 'string') return Number.NEGATIVE_INFINITY
+
+  const dateOnlyMatch = value.match(/^(\d{4})-(\d{2})-(\d{2})$/)
+  if (dateOnlyMatch) {
+    const [, year, month, day] = dateOnlyMatch
+    const parsed = new Date(
+      Number.parseInt(year, 10),
+      Number.parseInt(month, 10) - 1,
+      Number.parseInt(day, 10)
+    )
+    return Number.isNaN(parsed.getTime()) ? Number.NEGATIVE_INFINITY : parsed.getTime()
+  }
+
+  const parsed = new Date(value)
+  return Number.isNaN(parsed.getTime()) ? Number.NEGATIVE_INFINITY : parsed.getTime()
+}
+
 const getText = (node: Node): string => {
   if (node.type === 'text') {
     return node.value ?? ''
@@ -236,7 +254,7 @@ export function getAllPosts() {
         content
       }
     })
-    .sort((a, b) => (a.date < b.date ? 1 : -1))
+    .sort((a, b) => parseDateToTimestamp(b.date) - parseDateToTimestamp(a.date))
 }
 
 export function getPostBySlug(slug: string) {
