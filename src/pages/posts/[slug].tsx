@@ -1,7 +1,7 @@
 import { getAllPosts, getPostBySlug } from '@/lib/markdown'
 import Layout from '@/layouts/Layout'
 import Link from 'next/link'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import TableOfContents from '@/components/TableOfContents'
 import TagList from '@/components/TagList'
 import { siteConfig } from '@site-config'
@@ -24,19 +24,36 @@ interface PostProps {
   }
 }
 
+const parseDateValue = (value: string): Date | null => {
+  const dateOnlyMatch = value.match(/^(\d{4})-(\d{2})-(\d{2})$/)
+  if (dateOnlyMatch) {
+    const [, year, month, day] = dateOnlyMatch
+    const parsed = new Date(
+      Number.parseInt(year, 10),
+      Number.parseInt(month, 10) - 1,
+      Number.parseInt(day, 10)
+    )
+    return Number.isNaN(parsed.getTime()) ? null : parsed
+  }
+
+  const parsed = new Date(value)
+  return Number.isNaN(parsed.getTime()) ? null : parsed
+}
+
 const formatDate = (
   value: string | null | undefined,
   locale: string,
   options?: Intl.DateTimeFormatOptions
 ) => {
   if (!value) return null
-  const parsed = new Date(value)
-  if (Number.isNaN(parsed.getTime())) return null
+  const parsed = parseDateValue(value)
+  if (!parsed) return null
   return parsed.toLocaleDateString(locale, options)
 }
 
 export default function Post({ post }: PostProps) {
   const headings = post.headings
+  const contentRef = useRef<HTMLDivElement>(null)
   const formattedDate = formatDate(
     post.date,
     siteConfig.formatting.dateLocale,
@@ -56,8 +73,11 @@ export default function Post({ post }: PostProps) {
   }
 
   useEffect(() => {
-    const codeBlocks = document.querySelectorAll('.prose pre')
-    codeBlocks.forEach(pre => {
+    const container = contentRef.current
+    if (!container) return
+
+    const codeBlocks = container.querySelectorAll('pre')
+    codeBlocks.forEach((pre) => {
       pre.classList.add('group', 'relative')
       pre.querySelectorAll('.language-badge').forEach((badge) => badge.remove())
   
@@ -65,6 +85,7 @@ export default function Post({ post }: PostProps) {
         const copyButton = document.createElement('button')
         copyButton.textContent = siteConfig.post.copyButtonLabel
         copyButton.className = 'copy-button'
+        copyButton.setAttribute('data-copy-button', 'true')
         const codeElement = pre.querySelector('code')
         const code = codeElement?.textContent || pre.textContent || ''
         copyButton.addEventListener('click', () => copyToClipboard(code, copyButton))
@@ -73,8 +94,8 @@ export default function Post({ post }: PostProps) {
     })
   
     return () => {
-      const copyButtons = document.querySelectorAll('.copy-button')
-      copyButtons.forEach(button => button.remove())
+      const scopedButtons = container.querySelectorAll<HTMLButtonElement>('[data-copy-button="true"]')
+      scopedButtons.forEach(button => button.remove())
     }
   }, [post.html])
 
@@ -150,7 +171,7 @@ export default function Post({ post }: PostProps) {
             </section>
 
             <div className="prose mx-auto surface-panel rounded-xl p-6 dark:prose-invert text-neutral-900 dark:text-neutral-100">
-              <div dangerouslySetInnerHTML={{ __html: content }} />
+              <div ref={contentRef} dangerouslySetInnerHTML={{ __html: content }} />
             </div>
           </div>
 
