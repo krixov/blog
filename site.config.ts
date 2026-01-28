@@ -17,8 +17,8 @@ export const siteConfig = {
         href: '/about',
       },
       {
-        label: 'Archivement',
-        href: '/archivement',
+        label: 'Achievement',
+        href: '/achievement',
       },
     ],
   },
