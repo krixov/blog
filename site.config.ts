@@ -1,6 +1,7 @@
 const siteName = "sondt's Blog"
 
 export const siteConfig = {
+  siteUrl: process.env.SITE_URL || 'https://blog.nosiaht.com',
   name: siteName,
   metaDescription: 'A professional blog about software development and technology',
   author: {
