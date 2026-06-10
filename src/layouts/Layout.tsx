@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { siteConfig } from '@site-config'
+import SearchModal, { type SearchPost } from '@/components/SearchModal'
 
 export type JsonLdValue = string | number | boolean | null | JsonLdValue[] | { [key: string]: JsonLdValue }
 export type JsonLdObject = { [key: string]: JsonLdValue }
@@ -9,36 +10,43 @@ export type JsonLdObject = { [key: string]: JsonLdValue }
 interface LayoutProps {
   children: React.ReactNode
   title?: string
+  description?: string
+  image?: string
+  canonicalUrl?: string
+  type?: 'website' | 'article'
+  publishedTime?: string
   jsonLd?: JsonLdObject | JsonLdObject[]
+  searchPosts?: SearchPost[]
 }
-
-const themeInitScript = `
-(function() {
-  try {
-    var stored = localStorage.getItem('theme');
-    var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    var isDark = stored === 'dark' || (!stored && prefersDark);
-    if (isDark) document.documentElement.classList.add('dark');
-  } catch (e) {}
-})();
-`
 
 const serializeJsonLd = (item: JsonLdObject) => JSON.stringify(item).replace(/</g, '\\u003c')
 
-export default function Layout({ children, title = 'Blog', jsonLd }: LayoutProps) {
+const toAbsoluteUrl = (pathOrUrl: string) => {
+  if (pathOrUrl.startsWith('http://') || pathOrUrl.startsWith('https://')) return pathOrUrl
+  return new URL(pathOrUrl, siteConfig.siteUrl).toString()
+}
+
+export default function Layout({
+  children,
+  title = 'Blog',
+  description,
+  image,
+  canonicalUrl,
+  type = 'website',
+  publishedTime,
+  jsonLd,
+  searchPosts = [],
+}: LayoutProps) {
   const [isDark, setIsDark] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
   const isExternalLink = (href: string) =>
     href.startsWith('http://') || href.startsWith('https://') || href.startsWith('//')
 
+  // Sync React state from the DOM class set by _document.tsx's inline script.
+  // Do NOT manipulate classList here — _document.tsx already did it before first paint.
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme')
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-    
-    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-      setIsDark(true)
-      document.documentElement.classList.add('dark')
-    }
+    setIsDark(document.documentElement.classList.contains('dark'))
   }, [])
 
   useEffect(() => {
@@ -53,6 +61,11 @@ export default function Layout({ children, title = 'Blog', jsonLd }: LayoutProps
   const themeUrl = 'https://github.com/sondt99/Tech-Blog'
   const authorName = siteConfig.author.name
   const jsonLdItems = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : []
+
+  const metaDescription = description || siteConfig.metaDescription
+  const pageTitle = `${title} - ${siteConfig.name}`
+  const canonical = canonicalUrl ? toAbsoluteUrl(canonicalUrl) : undefined
+  const ogImage = image ? toAbsoluteUrl(image) : undefined
 
   const toggleDarkMode = () => {
     setIsDark(!isDark)
@@ -69,12 +82,39 @@ export default function Layout({ children, title = 'Blog', jsonLd }: LayoutProps
     <div className="min-h-screen flex flex-col transition-colors duration-200 text-neutral-900 dark:text-white">
       <div className="flex-grow">
         <Head>
-          <title>{title} - {siteConfig.name}</title>
-          <link rel="icon" href="/favicon.ico" />
-          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css" />
-          <link rel="alternate" type="application/rss+xml" title={`${siteConfig.name} RSS Feed`} href="/feed.xml" />
+          <title>{pageTitle}</title>
+          <meta name="description" content={metaDescription} />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <meta name="description" content={siteConfig.metaDescription} />
+
+          {/* Open Graph */}
+          <meta property="og:title" content={pageTitle} />
+          <meta property="og:description" content={metaDescription} />
+          <meta property="og:type" content={type} />
+          <meta property="og:site_name" content={siteConfig.name} />
+          {canonical && <meta property="og:url" content={canonical} />}
+          {ogImage && <meta property="og:image" content={ogImage} />}
+          {type === 'article' && publishedTime && (
+            <meta property="article:published_time" content={publishedTime} />
+          )}
+
+          {/* Twitter Card */}
+          <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
+          <meta name="twitter:title" content={pageTitle} />
+          <meta name="twitter:description" content={metaDescription} />
+          {ogImage && <meta name="twitter:image" content={ogImage} />}
+
+          {/* Canonical */}
+          {canonical && <link rel="canonical" href={canonical} />}
+
+          <link rel="icon" href="/favicon.ico" />
+          <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+          <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+          <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+          <link rel="manifest" href="/site.webmanifest" />
+          <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+          <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
+          <link rel="alternate" type="application/rss+xml" title={`${siteConfig.name} RSS Feed`} href="/feed.xml" />
+
           {jsonLdItems.map((item, index) => (
             <script
               key={`json-ld-${index}`}
@@ -82,7 +122,6 @@ export default function Layout({ children, title = 'Blog', jsonLd }: LayoutProps
               dangerouslySetInnerHTML={{ __html: serializeJsonLd(item) }}
             />
           ))}
-          <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         </Head>
 
         <header className={`sticky top-0 z-50 transition-all duration-200 surface-bar ${isScrolled ? 'shadow-sm' : ''}`}>
@@ -93,9 +132,8 @@ export default function Layout({ children, title = 'Blog', jsonLd }: LayoutProps
                   {siteConfig.name}
                 </span>
               </Link>
-              
+
               <div className="flex items-center space-x-6">
-                {/* <Link href="/" className="nav-link">Home</Link> */}
                 {siteConfig.nav.links.map((link) =>
                   isExternalLink(link.href) ? (
                     <a
@@ -114,7 +152,27 @@ export default function Layout({ children, title = 'Blog', jsonLd }: LayoutProps
                   )
                 )}
                 <button
+                  onClick={() => setIsSearchOpen(true)}
+                  aria-label="Open search"
+                  className="p-2 rounded-md border border-transparent hover:border-neutral-300 hover:bg-neutral-100 dark:hover:border-neutral-700 dark:hover:bg-neutral-900 transition-colors"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    className="h-4 w-4"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="M21 21l-4.35-4.35" />
+                  </svg>
+                </button>
+                <button
                   onClick={toggleDarkMode}
+                  aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
                   className="p-2 rounded-md border border-transparent hover:border-neutral-300 hover:bg-neutral-100 dark:hover:border-neutral-700 dark:hover:bg-neutral-900 transition-colors"
                 >
                   {isDark ? (
@@ -150,6 +208,12 @@ export default function Layout({ children, title = 'Blog', jsonLd }: LayoutProps
             </div>
           </nav>
         </header>
+
+        <SearchModal
+          posts={searchPosts}
+          isOpen={isSearchOpen}
+          onClose={() => setIsSearchOpen(false)}
+        />
 
         <main className="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           {children}
